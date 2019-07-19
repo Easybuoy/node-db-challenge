@@ -1,7 +1,7 @@
 const Project = require("../models/project");
 // const Action = require("../data/helpers/actionModel");
 
-function validateAction(req, res, next) {
+validateAction = (req, res, next) => {
   const { body } = req;
 
   if (!body) {
@@ -19,9 +19,9 @@ function validateAction(req, res, next) {
   }
 
   next();
-}
+};
 
-async function validateProjectId(req, res, next) {
+validateProjectId = async (req, res, next) => {
   const { id } = req.params;
 
   const project = await Project.getById(id);
@@ -32,7 +32,7 @@ async function validateProjectId(req, res, next) {
 
   req.project = project;
   next();
-}
+};
 
 const validateActionId = async (req, res, next) => {
   const { id } = req.params;
@@ -48,7 +48,7 @@ const validateActionId = async (req, res, next) => {
   next();
 };
 
-function validateProject(req, res, next) {
+validateProject = (req, res, next) => {
   const { body } = req;
 
   if (!body) {
@@ -66,11 +66,39 @@ function validateProject(req, res, next) {
   }
 
   next();
-}
+};
+
+setBoolean = data => {
+  if (data.length === undefined) {
+    if (data.completed === 0) {
+      data.completed = false;
+    } else {
+      data.completed = true;
+    }
+    return data;
+  }
+
+  if (data.length > 0) {
+    const newData = data.map(singleData => {
+      if (singleData.completed === 0) {
+        singleData.completed = false;
+      } else {
+        singleData.completed = true;
+      }
+      return singleData;
+    });
+    return newData;
+  } else {
+    return data;
+  }
+  // console.log(typeof object);
+  console.log(object.length);
+};
 
 module.exports = {
   validateAction,
   validateProject,
   validateProjectId,
-  validateActionId
+  validateActionId,
+  setBoolean
 };

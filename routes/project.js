@@ -2,7 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 const Project = require("../models/project");
-const { validateProject, validateProjectId } = require("../middlewares");
+const {
+  validateProject,
+  validateProjectId,
+  setBoolean
+} = require("../middlewares");
 /**
  * METHOD: POST
  * ROUTE: /api/projects/
@@ -58,16 +62,16 @@ router.get("/", async (req, res) => {
  */
 router.get("/:id", validateProjectId, async (req, res) => {
   try {
-    const actions = await Project.getProjectActions(req.project.id);
+    let actions = await Project.getProjectActions(req.project.id);
+    actions = setBoolean(actions)
+    let data = setBoolean(req.project);
+    data.actions = actions;
     return res.json({
       status: "success",
-      data: req.project,
-      actions,
-
+      data,
       message: "Project gotten successfully"
     });
   } catch (error) {
-    console.log(error);
     return res
       .status(500)
       .json({ status: "error", message: "Error getting project detail" });
