@@ -34,18 +34,19 @@ Demonstrate your understanding of this week's concepts by answering the followin
 
 1. Explain the difference between `Relational Databases` and `SQL`.
 
-  Relational Databases are essentially SQL
+  > Relational Databases are essentially SQL so i would say there are no differences
 
 1. Why do tables need a `primary key`?
 
-To unqely identify every record in that table.
+> To unqely identify every record in that table.
 
 1. What is the name given to a table column that references the primary key on another table.
-  Foreign key
+
+ > Foreign key
 
 1. What do we need in order to have a _many to many_ relationship between two tables.
   
-  We need an extra table that holds the records of the two relationships.
+ > We need an extra table (intermediary table) that holds the records of the two relationships.
 
 ## Project Set Up
 
