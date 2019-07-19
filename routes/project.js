@@ -15,8 +15,9 @@ const {
 router.post("/", validateProject, async (req, res) => {
   try {
     const { name, description } = req.body;
+    console.log(name, description)
     const newProject = await Project.insert({ name, description });
-
+    console.log(newProject)
     if (newProject) {
       return res
         .status(201)
@@ -27,6 +28,7 @@ router.post("/", validateProject, async (req, res) => {
       .status(500)
       .json({ status: "error", message: "Error creating project" });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ status: "error", message: "Error creating project" });
@@ -40,8 +42,9 @@ router.post("/", validateProject, async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    const project = await Project.get();
+    let project = await Project.get();
     if (project.length > 0) {
+      project = setBoolean(project);
       return res.json({ status: "success", data: project });
     }
 
@@ -63,7 +66,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", validateProjectId, async (req, res) => {
   try {
     let actions = await Project.getProjectActions(req.project.id);
-    actions = setBoolean(actions)
+    actions = setBoolean(actions);
     let data = setBoolean(req.project);
     data.actions = actions;
     return res.json({

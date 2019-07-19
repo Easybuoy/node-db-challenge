@@ -1,5 +1,5 @@
 const Project = require("../models/project");
-// const Action = require("../data/helpers/actionModel");
+const Action = require("../models/action");
 
 validateAction = (req, res, next) => {
   const { body } = req;
@@ -37,7 +37,7 @@ validateProjectId = async (req, res, next) => {
 const validateActionId = async (req, res, next) => {
   const { id } = req.params;
 
-  const action = await Action.get(id);
+  const action = await Action.getById(id);
 
   if (!action) {
     return res.status(400).json({ message: "invalid action id" });

@@ -1,34 +1,34 @@
 const db = require("../data/dbConfig.js");
 
-get = async () => {
+function get() {
   return db("projects");
-};
+}
 
-getById = async id => {
+function getById(id) {
   return db("projects")
     .where({ id })
     .first();
-};
+}
 
-insert = async post => {
+function insert(project) {
   return db("projects")
-    .insert(post)
+    .insert(project)
     .then(ids => {
       return getById(ids[0]);
     });
-};
+}
 
-update = async (id, changes) => {
+function update(id, changes) {
   return db("projects")
     .where({ id })
     .update(changes);
-};
+}
 
-remove = async id => {
+function remove(id) {
   return db("projects")
     .where("id", id)
     .del();
-};
+}
 
 getProjectActions = async id => {
   return await db("actions")

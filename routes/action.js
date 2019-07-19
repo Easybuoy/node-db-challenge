@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const Action = require("../models/action")
+const Action = require("../models/action");
 const {
   validateAction,
   validateProjectId,
@@ -55,7 +55,8 @@ router.post("/:id", validateProjectId, validateAction, async (req, res) => {
       status: "error",
       message: "Error creating action for project"
     });
-  } catch (error) { console.log(error)
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({
       status: "error",
       message: "Error creating action for project"
@@ -70,18 +71,11 @@ router.post("/:id", validateProjectId, validateAction, async (req, res) => {
  */
 router.get("/:id", validateActionId, async (req, res) => {
   try {
-    const actions = await Action.get(req.action.id);
-
-    if (actions) {
-      return res.json({
-        status: "success",
-        message: "Action detail gotten successfully",
-        data: actions
-      });
-    }
-    return res
-      .status(404)
-      .json({ status: "error", message: "Action not found" });
+    return res.json({
+      status: "success",
+      message: "Action detail gotten successfully",
+      data: req.action
+    });
   } catch (error) {
     return res
       .status(500)
