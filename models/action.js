@@ -1,39 +1,33 @@
 const db = require("../data/dbConfig.js");
 
 get = async () => {
-  return db("projects");
+  return db("actions");
 };
 
 getById = async id => {
-  return db("projects")
+  return db("actions")
     .where({ id })
     .first();
 };
 
-insert = async post => {
-  return db("projects")
-    .insert(post)
+insert = async action => {
+  return db("actions")
+    .insert(action)
     .then(ids => {
       return getById(ids[0]);
     });
 };
 
 update = async (id, changes) => {
-  return db("projects")
+  return db("actions")
     .where({ id })
     .update(changes);
 };
 
 remove = async id => {
-  return db("projects")
+  return db("actions")
     .where("id", id)
     .del();
-};
-
-getProjectActions = async id => {
-  return await db("actions")
-    .join("projects", "projects.id", "project_id")
-    .where({ project_id: id });
 };
 
 module.exports = {
@@ -41,6 +35,5 @@ module.exports = {
   getById,
   insert,
   update,
-  remove,
-  getProjectActions
+  remove
 };

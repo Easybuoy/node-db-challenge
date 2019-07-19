@@ -58,12 +58,16 @@ router.get("/", async (req, res) => {
  */
 router.get("/:id", validateProjectId, async (req, res) => {
   try {
+    const actions = await Project.getProjectActions(req.project.id);
     return res.json({
       status: "success",
       data: req.project,
+      actions,
+
       message: "Project gotten successfully"
     });
   } catch (error) {
+    console.log(error);
     return res
       .status(500)
       .json({ status: "error", message: "Error getting project detail" });
@@ -121,31 +125,6 @@ router.put("/:id", validateProjectId, async (req, res) => {
     return res
       .status(500)
       .json({ status: "error", message: "Error updating project" });
-  }
-});
-
-/**
- * METHOD: GET
- * ROUTE: /api/projects/:id/actions
- * PURPOSE: Get project action(s)
- */
-router.get("/:id/actions", async (req, res) => {
-  try {
-    const actions = await Project.getProjectActions(req.project.id);
-    if (actions.length > 0) {
-      return res.json({
-        status: "success",
-        message: "Project action  gotten successfully",
-        data: actions
-      });
-    }
-    return res
-      .status(404)
-      .json({ status: "error", message: "Project Actions not found" });
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ status: "error", message: "Error getting project action" });
   }
 });
 
