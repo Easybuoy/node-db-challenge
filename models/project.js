@@ -33,6 +33,7 @@ function remove(id) {
 getProjectActions = async id => {
   return await db("actions")
     .join("projects", "projects.id", "project_id")
+    .select('actions.id', 'notes', 'actions.description', 'actions.completed')
     .where({ project_id: id });
 };
 

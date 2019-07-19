@@ -56,7 +56,7 @@ router.post("/:id", validateProjectId, validateAction, async (req, res) => {
       message: "Error creating action for project"
     });
   } catch (error) {
-    console.log(error);
+
     return res.status(500).json({
       status: "error",
       message: "Error creating action for project"
