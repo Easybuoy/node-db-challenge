@@ -30,10 +30,23 @@ function remove(id) {
     .del();
 }
 
+assignContext = async (action_id, context_id) => {
+  return await db("action_context").insert({ action_id, context_id });
+};
+
+getContexts = async action_id => {
+  return await db("action_context")
+    .select("contexts.name")
+    .join("contexts", "action_context.context_id", "contexts.id")
+    .where({ "action_context.action_id": action_id });
+};
+
 module.exports = {
   get,
   getById,
   insert,
   update,
-  remove
+  remove,
+  assignContext,
+  getContexts
 };
