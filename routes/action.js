@@ -6,7 +6,8 @@ const Action = require("../models/action");
 const {
   validateAction,
   validateProjectId,
-  validateActionId
+  validateActionId,
+  setBoolean
 } = require("../middlewares");
 
 /**
@@ -16,8 +17,9 @@ const {
  */
 router.get("/", async (req, res) => {
   try {
-    const actions = await Action.get();
+    let actions = await Action.get();
     if (actions.length > 0) {
+        actions = setBoolean(actions)
       return res.json({ status: "success", data: actions });
     }
 
@@ -71,10 +73,11 @@ router.post("/:id", validateProjectId, validateAction, async (req, res) => {
  */
 router.get("/:id", validateActionId, async (req, res) => {
   try {
+      const action = setBoolean(req.action)
     return res.json({
       status: "success",
       message: "Action detail gotten successfully",
-      data: req.action
+      data: action
     });
   } catch (error) {
     return res
