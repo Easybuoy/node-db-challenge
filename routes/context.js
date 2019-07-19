@@ -7,8 +7,8 @@ const { validateContext, validateContextId } = require("../middlewares");
 
 /**
  * METHOD: GET
- * ROUTE: /api/actions/
- * PURPOSE: Get all actions
+ * ROUTE: /api/contexts/
+ * PURPOSE: Get all contexts
  */
 router.get("/", async (req, res) => {
   try {
@@ -29,8 +29,8 @@ router.get("/", async (req, res) => {
 
 /**
  * METHOD: POST
- * ROUTE: /api/actions/:id/
- * PURPOSE: Create new action for a project
+ * ROUTE: /api/contexts
+ * PURPOSE: Create new context
  */
 router.post("/", validateContext, async (req, res) => {
   try {
@@ -59,8 +59,8 @@ router.post("/", validateContext, async (req, res) => {
 
 /**
  * METHOD: GET
- * ROUTE: /api/actions/:id/
- * PURPOSE: Get single action(s)
+ * ROUTE: /api/contexts/:id/
+ * PURPOSE: Get single context
  */
 router.get("/:id", validateContextId, async (req, res) => {
   try {
@@ -80,7 +80,7 @@ router.get("/:id", validateContextId, async (req, res) => {
 /**
  * METHOD: DELETE
  * ROUTE: /api/contexts/:id
- * PURPOSE: Delete an action
+ * PURPOSE: Delete a context
  */
 router.delete("/:id", validateContextId, async (req, res) => {
   try {
@@ -104,8 +104,8 @@ router.delete("/:id", validateContextId, async (req, res) => {
 
 /**
  * METHOD: PUT
- * ROUTE: /api/actions/:id
- * PURPOSE: Update an action
+ * ROUTE: /api/contexts/:id
+ * PURPOSE: Update a context
  */
 router.put("/:id", validateContextId, async (req, res) => {
   try {
