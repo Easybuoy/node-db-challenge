@@ -2,13 +2,13 @@ const express = require("express");
 
 const router = express.Router();
 const Project = require("../models/project");
-
+const { validateProject, validateProjectId } = require("../middlewares");
 /**
  * METHOD: POST
  * ROUTE: /api/projects/
  * PURPOSE: Create new project
  */
-router.post("/", async (req, res) => {
+router.post("/", validateProject, async (req, res) => {
   try {
     const { name, description } = req.body;
     const newProject = await Project.insert({ name, description });
@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
  * ROUTE: /api/projects/:id
  * PURPOSE: Get single project by id
  */
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateProjectId, async (req, res) => {
   try {
     return res.json({
       status: "success",
@@ -75,7 +75,7 @@ router.get("/:id", async (req, res) => {
  * ROUTE: /api/projects/:id
  * PURPOSE: Delete a project
  */
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateProjectId, async (req, res) => {
   try {
     const deletedProject = await Project.remove(req.project.id);
 
@@ -100,7 +100,7 @@ router.delete("/:id", async (req, res) => {
  * ROUTE: /api/projects/:id
  * PURPOSE: Update a project
  */
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateProjectId, async (req, res) => {
   try {
     const { name, description } = req.body;
 
