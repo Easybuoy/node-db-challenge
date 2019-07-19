@@ -1,5 +1,6 @@
 const Project = require("../models/project");
 const Action = require("../models/action");
+const Context = require("../models/context");
 
 validateAction = (req, res, next) => {
   const { body } = req;
@@ -68,6 +69,34 @@ validateProject = (req, res, next) => {
   next();
 };
 
+validateContext = (req, res, next) => {
+  const { body } = req;
+
+  if (!body) {
+    return res.status(400).json({ message: "missing user data" });
+  }
+
+  if (!body.name) {
+    return res.status(400).json({ message: "missing required name field" });
+  }
+
+  next();
+};
+
+const validateContextId = async (req, res, next) => {
+  const { id } = req.params;
+
+  const context = await Context.getById(id);
+
+  if (!context) {
+    return res.status(400).json({ message: "invalid context id" });
+  }
+
+  req.context = context;
+
+  next();
+};
+
 setBoolean = data => {
   if (data.length === undefined) {
     if (data.completed === 0) {
@@ -100,5 +129,7 @@ module.exports = {
   validateProject,
   validateProjectId,
   validateActionId,
+  validateContext,
+  validateContextId,
   setBoolean
 };
